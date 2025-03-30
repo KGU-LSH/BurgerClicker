@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Burger Clicker</title>
+        <style>
+            .container {
+                width: 200px;
+                height: 200px;
+                margin: auto;
+                transition : all 0.1s;
+                position: relative;
+            }
+            .overlay {
+                position: absolute;
+                width: 200px;
+                height: 200px;
+                background: linear-gradient(
+                            105deg,
+                            transparent 40%,
+                            rgba(255, 219, 112, 0.8) 45%,
+                            rgba(132, 50, 255 ,0.6) 50%,
+                            transparent 54%);
+                filter: brightness(1.1) opacity(0.8);
+                mix-blend-mode: color-dodge;
+                background-size: 150% 150%;
+                background-position: center;
+                cursor: pointer;
+                transition: all 0.1s;
+            }
+            .card {
+                width: 200px;
+                height: 200px;
+                background-image: url(burger.gif);
+                background-size: cover;
+                background-position: center;
+            }
+            .score {
+                margin: auto;
+                margin-top: 20px;
+                font-size: 24px;
+                font-weight: bold;
+                text-align: center;
+            }
+            .result {
+                text-align: center;
+                margin-top: 20px;
+            }
+            .game {
+                border: 0;
+                cursor: pointer;
+                width: 150px;
+                height: 50px;
+                border-radius: 10px;
+            }
+          </style>        
+    </head>
+    <body>
+        <div class="container">
+            <div class="overlay"></div>
+            <div class="card"></div>
+        </div>
+        <div class="score">점수 : 0</div>
+        <div class="result">
+            <button class="save">Save</button>
+        </div>
+        <script>
+            var container = document.querySelector('.container')
+            var overlay = document.querySelector('.overlay')
+            var scoreDisplay = document.querySelector('.score');
+            var card = document.querySelector('.card');
+            var save = document.querySelector('.save');
+            var score = 0;
+            container.addEventListener('mousemove', function(e){
+                var x = e.offsetX
+                var y = e.offsetY
+                var rotateY = -1/5 * x + 20
+                var rotateX = 4/30 * y - 20
+                overlay.style = `background-position : ${x/5 + y/5}%; filter : opacity(${x/200}) brightness(1.2)`
+                container.style = `transform : perspective(350px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`
+            })
+            container.addEventListener('mouseout', function(){
+                overlay.style = 'filter : opacity(0)'
+                container.style = 'transform : perspective(350px) rotateY(0deg) rotateX(0deg)'
+            })
+            overlay.addEventListener('click', function() {
+                score++;
+                scoreDisplay.textContent = `점수 : ${score}`;
+            });
+            save.addEventListener('click', function() {
+                alert(`당신의 점수는 ${score}점!`);
+                score = 0;
+                scoreDisplay.textContent = `점수 : ${score}`;
+            });
+          </script>
+    </body>
+</html>
